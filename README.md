@@ -1,37 +1,37 @@
-# 🤖 Projet Sully : Robot Collecteur Autonome (LeJOS EV3)
+# 🤖 Project Sully: Autonomous Collector Robot (LeJOS EV3)
 
-## 📖 Présentation
-**Sully** est un robot autonome développé en **Java** avec la bibliothèque **LeJOS** pour la brique LEGO Mindstorms EV3. 
-L'objectif principal de Sully est d'explorer son environnement pour détecter, attraper et ramener le maximum de palets dans une zone de départ, le tout dans un temps imparti.
+## 📖 Presentation
+**Sully** is an autonomous robot developed in **Java** using the **LeJOS** library for the LEGO Mindstorms EV3 brick. 
+Sully's main objective is to explore its environment to detect, catch, and bring back as many pucks as possible to a starting zone within a time limit.
 
-Ce projet met en œuvre des concepts avancés de robotique logicielle : machine à états finis, contrôle de châssis différentiel, odométrie basique (système de boussole interne) et traitement de données sensorielles en temps réel.
+This project implements advanced software robotics concepts: finite state machines, differential chassis control, basic odometry (internal compass system), and real-time sensory data processing.
 
-## ⚙️ Architecture du Projet
-Le code est structuré en trois classes principales pour séparer la logique décisionnelle, les actions mécaniques et l'acquisition de données :
+## ⚙️ Project Architecture
+The code is structured into three main classes to separate decision-making logic, mechanical actions, and data acquisition:
 
-*   **`SullyMain.java` (Le Cerveau) :** Contient la boucle principale du programme structurée sous forme de **Machine à États** (`Debut`, `RechercherPalet`, `PrendrePalet`, `RamenerPalet`, `Fin`). Elle gère les transitions logiques de Sully en fonction des retours des capteurs.
-*   **`Actions.java` (La Motricité) :** Encapsule toute la logique de déplacement (via `MovePilot` et `WheeledChassis`). Elle gère le contrôle des moteurs des roues (vitesses modulables), le système d'ouverture/fermeture des pinces, et intègre une "boussole" interne basée sur le temps de rotation pour traquer l'orientation du robot.
-*   **`Capteurs.java` (Les Sens) :** Gère l'interface matérielle avec l'environnement. Elle initialise et interroge :
-    *   Le capteur à **Ultrasons** (détection des palets au loin).
-    *   Le capteur **Tactile / Pression** (confirmation que le palet est bien dans la pince).
-    *   Le capteur de **Couleur** (pour l'analyse du sol).
+- **`SullyMain.java` (The Brain):** Contains the main program loop structured as a **Finite State Machine** (`Debut`, `RechercherPalet`, `PrendrePalet`, `RamenerPalet`, `Fin`). It manages Sully's logical transitions based on sensor feedback.
+- **`Actions.java` (The Motricity):** Encapsulates all movement logic (via `MovePilot` and `WheeledChassis`). It handles wheel motor control (adjustable speeds), the gripper opening/closing system, and integrates an internal "compass" based on rotation time to track the robot's orientation.
+- **`Capteurs.java` (The Senses):** Manages the hardware interface with the environment. It initializes and queries:
+    * The **Ultrasonic** sensor (detecting pucks at a distance).
+    * The **Touch / Pressure** sensor (confirming that the puck is securely inside the gripper).
+    * The **Color** sensor (for floor analysis).
 
-## ✨ Fonctionnalités Principales
-1.  **Recherche Intelligente (Balayage) :** Sully effectue des rotations sur lui-même à vitesse réduite. Il surveille les variations brusques de distance (calcul du `seuil`) via l'ultrason pour isoler la position d'un palet.
-2.  **Préhension Sécurisée :** Une fois le palet repéré, Sully avance. Les pinces ne se ferment que lorsque le capteur de pression confirme le contact physique avec l'objet.
-3.  **Odométrie et Retour à la Base :** Le robot traque son angle de rotation via une variable `boussole` incrémentée lors de ses mouvements. Une fois le palet attrapé, Sully calcule l'angle de retour exact (`getAnglePoints`) pour le ramener à son point de départ.
-4.  **Mouvements Aléatoires & Évitement :** Si aucun palet n'est détecté lors d'un balayage, Sully se déplace aléatoirement pour changer de point de vue et relancer une recherche.
+## ✨ Main Features
+1. **Intelligent Search (Scanning):** Sully rotates on itself at reduced speed. It monitors sudden distance variations (calculating the `seuil` / threshold) via the ultrasonic sensor to isolate a puck's position.
+2. **Secure Gripping:** Once a puck is spotted, Sully moves forward. The grippers only close when the pressure sensor confirms physical contact with the object.
+3. **Odometry and Return to Base:** The robot tracks its rotation angle via a `boussole` (compass) variable incremented during movements. Once the puck is caught, Sully calculates the exact return angle (`getAnglePoints`) to bring it back to the starting point.
+4. **Random Movements & Avoidance:** If no puck is detected during a scan, Sully moves randomly to change perspective and restart a search.
 
-## 🛠️ Technologies Utilisées
-*   **Langage :** Java (Orienté Objet)
-*   **Framework Robotique :** [LeJOS EV3](http://www.lejos.org/ev3.php)
-*   **Matériel :** LEGO Mindstorms EV3 (2 Moteurs larges pour les roues, 1 Moteur pour la pince, Capteurs Ultrason, Tactile et Couleur).
+## 🛠️ Technologies Used
+- **Language:** Java (Object-Oriented)
+- **Robotics Framework:** [LeJOS EV3](http://www.lejos.org/ev3.php)
+- **Hardware:** LEGO Mindstorms EV3 (2 Large Motors for wheels, 1 Motor for the gripper, Ultrasonic, Touch, and Color sensors).
 
-## 🚀 Prérequis et Exécution
-Pour compiler et exécuter ce projet sur votre propre robot EV3 :
-1. Assurez-vous que votre brique EV3 est flashée avec une carte SD contenant l'OS **LeJOS**.
-2. Installez le plugin LeJOS sur votre IDE (Eclipse recommandé).
-3. Importez ce dépôt comme un projet Java/LeJOS.
-4. Connectez le robot via Bluetooth ou Wi-Fi.
-5. Lancez la compilation et l'exécution directement depuis l'IDE.
-6. Appuyez sur n'importe quel bouton de la brique EV3 pour démarrer le cycle (`Button.waitForAnyPress()`).
+## 🚀 Prerequisites and Execution
+To compile and execute this project on your own EV3 robot:
+1. Ensure your EV3 brick is flashed with an SD card containing the **LeJOS** OS.
+2. Install the LeJOS plugin on your IDE (Eclipse recommended).
+3. Import this repository as a Java/LeJOS project.
+4. Connect the robot via Bluetooth or Wi-Fi.
+5. Launch compilation and execution directly from the IDE.
+6. Press any button on the EV3 brick to start the cycle (`Button.waitForAnyPress()`).
